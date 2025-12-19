@@ -11,23 +11,25 @@ import static org.testng.Assert.assertTrue;
 
 public class RateValidator {
 
-    public void validateSchema() {
+    public RateValidator validateSchema() {
         given()
                 .when()
                 .get("https://kurs.onliner.by/sdapi/kurs/api/bestrate?currency=USD&type=nbrb")
                 .then()
                 .body(matchesJsonSchemaInClasspath("schemas/rate_schema.json"));
+        return this;
     }
 
-    public void validateHeaders() {
+    public RateValidator validateHeaders() {
         given()
                 .when()
                 .get("https://kurs.onliner.by/sdapi/kurs/api/bestrate?currency=USD&type=nbrb")
                 .then()
                 .header("Content-Type", containsString("application/json"));
+        return this;
     }
 
-    public void validateKeys() {
+    public RateValidator validateKeys() {
         given()
                 .when()
                 .get("https://kurs.onliner.by/sdapi/kurs/api/bestrate?currency=USD&type=nbrb")
@@ -35,12 +37,14 @@ public class RateValidator {
                 .body("$", hasKey("amount"))
                 .body("$", hasKey("grow"))
                 .body("$", hasKey("scale"));
+        return this;
     }
 
-    public void validateScaleRegex(String responseBody) {
+    public RateValidator validateScaleRegex(String responseBody) {
         String regex = "amount\"\\s*:\\s*\"\\d+,\\d{4}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(responseBody);
         assertTrue(matcher.find(), "Error message");
+        return this;
     }
 }

@@ -12,12 +12,13 @@ public class OnlTest {
     public void checkResponse() {
         String response = steps.getResponse();
 
-        validator.validateScaleRegex(response);
+        validator
+                .validateScaleRegex(response)
 
-        validator.validateKeys();
+                .validateKeys()
 
-        validator.validateHeaders();
+                .validateHeaders()
 
-        validator.validateSchema();
+                .validateSchema();
     }
 }
